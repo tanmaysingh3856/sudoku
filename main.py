@@ -1,6 +1,6 @@
 from PySide6.QtWidgets import QApplication, QMainWindow, QWidget, QGridLayout, QLineEdit, QPushButton, QVBoxLayout
 from PySide6.QtCore import Qt
-from PySide6.QtGui import QFont
+from PySide6.QtGui import QFont, QIntValidator
 
 class SudokuSolver(QMainWindow):
     def __init__(self):
@@ -16,11 +16,14 @@ class SudokuSolver(QMainWindow):
         self.grid_layout = QGridLayout()
         self.cells = [[QLineEdit(self) for _ in range(9)] for _ in range(9)]
         
+        int_validator = QIntValidator(1, 9, self)
+        
         for i in range(9):
             for j in range(9):
                 self.cells[i][j].setFixedSize(50, 50)
                 self.cells[i][j].setFont(QFont("Arial", 20))
                 self.cells[i][j].setAlignment(Qt.AlignCenter)
+                self.cells[i][j].setValidator(int_validator)
                 self.cells[i][j].setStyleSheet(self.get_cell_style(i, j))
                 self.grid_layout.addWidget(self.cells[i][j], i, j)
         
